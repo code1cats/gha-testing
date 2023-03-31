@@ -1,12 +1,30 @@
 ---
-name: Hello World
+name: My Workflow
 
-on: [push]
+on:
+  push:
+    paths:
+    - '**' # Watch for changes in any path
 
 jobs:
-  print_hello_world:
+  my_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Print Hello World
-      run: echo "Hello, World!"
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Do something
+      run: echo "This job runs on every push"
+  
+  env1_job:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_path | contains('env1/') }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Do something else
+      run: |
+        echo "This job runs only if files under env1/ are modified"
+        ./env1/main.sh 
 
