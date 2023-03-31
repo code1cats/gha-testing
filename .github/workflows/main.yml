@@ -14,7 +14,9 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Do something
-      run: echo "This job runs on every push- ${{ github.event_path }}"
+      run: |
+        echo "This job runs on every push- ${{ github.event_path }}"
+        cat ${{ github.event_path }}
   
   env1_job:
     runs-on: ubuntu-latest
