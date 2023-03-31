@@ -15,8 +15,7 @@ jobs:
       
     - name: Do something
       run: |
-        echo "This job runs on every push- ${{ github.event_path }}"
-        cat ${{ github.event_path }}
+        echo "This job runs on every push- ${{ github.event.head_commit.modified }}"
   
   env1_job:
     runs-on: ubuntu-latest
