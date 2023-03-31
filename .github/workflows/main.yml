@@ -10,22 +10,10 @@ jobs:
   my_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Do something
-      run: |
-        echo "This job runs on every push- ${{ github.event.head_commit.modified }}"
-  
-  env1_job:
-    runs-on: ubuntu-latest
-    if: startsWith(github.event_path, 'env1/')
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Do something else
-      run: |
-        echo "This job runs only if files under env1/ are modified"
-        ./env1/main.sh 
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get changes
+      run: git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
 
