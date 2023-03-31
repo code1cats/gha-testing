@@ -19,7 +19,14 @@ jobs:
     - name: Run script with changes
       id: names_output
       run: |
-        temp="$(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | paste -sd "," -)"
+        temp=""
+        while read -r path; do
+            temp+="'"
+            temp+="${path}"
+            temp+="',"
+        done < <(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq)
+
+        temp=$(echo $temp | sed -e '$s/,$//' )
         temp="{'name': [$temp]}"
         echo paths=$temp >> "$GITHUB_OUTPUT"
 
