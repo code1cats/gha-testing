@@ -19,7 +19,7 @@ jobs:
     - name: Run script with changes
       id: names_output
       run: |
-        echo  "paths=($(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | tr '\n' , | sed -e '$s/,$//'))" >> "$GITHUB_OUTPUT"
+        echo  "paths=[$(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | tr '\n' , | sed -e '$s/,$//')]" >> "$GITHUB_OUTPUT"
 
   other:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
     needs: my_job
     strategy:
       matrix:
-        name: ${{ needs.my_job.outputs.names }}
+        name: ${{ fromJson(needs.my_job.outputs.names) }}
     runs-on: ubuntu-latest
     steps:
       - name: Print name
