@@ -33,7 +33,7 @@ jobs:
     needs: my_job
     strategy:
       matrix:
-        name: ${{ split(needs.my_job.outputs.names, ",") }}
+        name: ${{ fromJSON('["' + replace(needs.my_job.outputs.names, ",", '","') + '"]') }}
     runs-on: ubuntu-latest
     steps:
       - name: Print name
