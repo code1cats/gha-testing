@@ -21,6 +21,13 @@ jobs:
       run: |
         echo  "paths=[$(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | tr '\n' , | sed -e '$s/,$//')]" >> "$GITHUB_OUTPUT"
 
+  other:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print name
+        run: |
+         echo "${{ needs.my_job.outputs.paths  }}"
+
   print_names:
     needs: my_job
     strategy:
