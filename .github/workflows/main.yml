@@ -2,9 +2,9 @@
 name: My Workflow
 
 on:
-  push:
-    paths:
-    - '**' # Watch for changes in any path
+  pull_request:
+    branches:
+      - main
 
 jobs:
   my_job:
