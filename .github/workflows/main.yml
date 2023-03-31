@@ -17,6 +17,7 @@ jobs:
       with:
         fetch-depth: 2
     - name: Run script with changes
+      id: names_output
       run: |
         while read -r path; do
           echo "::set-output path=paths:${path}"
