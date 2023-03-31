@@ -19,9 +19,7 @@ jobs:
     - name: Run script with changes
       id: names_output
       run: |
-        while read -r path; do
-          echo "::set-output path=paths:${path}"
-        done < <(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq)
+        echo  "paths=[$(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | tr '\n' , | sed -e '$s/,$//')]" >> "$GITHUB_OUTPUT"
 
   print_names:
     needs: my_job
