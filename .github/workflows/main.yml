@@ -42,6 +42,7 @@ jobs:
       matrix: ${{ fromJSON(  needs.my_job.outputs.names ) }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Print name
         run: |
           cat ./${{ matrix.name }}/main.sh
