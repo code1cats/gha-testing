@@ -9,14 +9,12 @@ on:
 jobs:
   my_job:
     runs-on: ubuntu-latest
-    env:
-      MSG: ${{ github.event_path }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
       
     - name: Do something
-      run: echo "This job runs on every push- $MSG"
+      run: echo "This job runs on every push- ${{ github.event_path }}"
   
   env1_job:
     runs-on: ubuntu-latest
