@@ -35,7 +35,7 @@ jobs:
   print_names:
     needs: my_job
     strategy:
-      matrix: ${{ fromJSON(needs.my_job.outputs.names) }}
+      matrix: ${{ fromJSON( toJSON( needs.my_job.outputs.names ) ) }}
     runs-on: ubuntu-latest
     steps:
       - name: Print name
