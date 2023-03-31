@@ -10,7 +10,7 @@ jobs:
   my_job:
     runs-on: ubuntu-latest
     env:
-      MSG: github.event_path
+      MSG: ${{ github.event_path }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
