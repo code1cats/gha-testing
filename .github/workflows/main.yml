@@ -10,7 +10,7 @@ jobs:
   my_job:
     runs-on: ubuntu-latest
     outputs:
-      names: ${{ steps.names_output.outputs.names }}
+      names: ${{ steps.names_output.outputs.paths }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -19,9 +19,7 @@ jobs:
     - name: Run script with changes
       id: names_output
       run: |
-        while read -r path; do
-          echo "::set-output name=names::$path"
-        done < <(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq)
+        echo  "paths=($(git diff --name-only -r HEAD^1 HEAD | grep env | cut -d/ -f1 | uniq | tr '\n' , | sed -e '$s/,$//'))" >> "$GITHUB_OUTPUT"
 
   other:
     runs-on: ubuntu-latest
